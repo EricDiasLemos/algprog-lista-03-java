@@ -1,0 +1,248 @@
+import java.util.Scanner;
+
+public class Lista03 {
+
+    static Scanner sc = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        int opcao;
+
+        do {
+            System.out.println("\n╔══════════════════════════════════════╗");
+            System.out.println("║       LISTA DE EXERCÍCIOS III        ║");
+            System.out.println("║    Algoritmos e Programação - UNA    ║");
+            System.out.println("╠══════════════════════════════════════╣");
+            System.out.println("║  1. Maior, Menor e Média             ║");
+            System.out.println("║  2. Máquina de Troco                 ║");
+            System.out.println("║  3. Equação do 2º Grau               ║");
+            System.out.println("║  4. Círculo e Esfera                 ║");
+            System.out.println("║  5. Calculadora com Símbolo          ║");
+            System.out.println("║  6. Sorteio de Número                ║");
+            System.out.println("║  0. Sair                             ║");
+            System.out.println("╚══════════════════════════════════════╝");
+            System.out.print("  Escolha uma opção: ");
+            opcao = sc.nextInt();
+
+            switch (opcao) {
+                case 1:
+                    exercicio1();
+                    break;
+                case 2:
+                    exercicio2();
+                    break;
+                case 3:
+                    exercicio3();
+                    break;
+                case 4:
+                    exercicio4();
+                    break;
+                case 5:
+                    exercicio5();
+                    break;
+                case 6:
+                    exercicio6();
+                    break;
+                case 0:
+                    System.out.println("\n  Encerrando o programa. Até mais!");
+                    break;
+                default:
+                    System.out.println("\n  Opção inválida! Tente novamente.");
+            }
+
+        } while (opcao != 0);
+    }
+
+    // ─────────────────────────────────────────────
+    // Exercício 1 – Maior, Menor e Média
+    // ─────────────────────────────────────────────
+    static void exercicio1() {
+        System.out.println("\n── Exercício 1: Maior, Menor e Média ──");
+        System.out.print("Digite o 1º número: ");
+        double n1 = sc.nextDouble();
+        System.out.print("Digite o 2º número: ");
+        double n2 = sc.nextDouble();
+        System.out.print("Digite o 3º número: ");
+        double n3 = sc.nextDouble();
+
+        double maior = n1;
+        double menor = n1;
+
+        if (n2 > maior) maior = n2;
+        if (n3 > maior) maior = n3;
+
+        if (n2 < menor) menor = n2;
+        if (n3 < menor) menor = n3;
+
+        double media = (n1 + n2 + n3) / 3;
+
+        System.out.println("\n  Maior número  : " + maior);
+        System.out.println("  Menor número  : " + menor);
+        System.out.printf("  Média         : %.2f%n", media);
+    }
+
+    // ─────────────────────────────────────────────
+    // Exercício 2 – Máquina de Troco
+    // ─────────────────────────────────────────────
+    static void exercicio2() {
+        System.out.println("\n── Exercício 2: Máquina de Troco ──");
+        System.out.print("Valor da compra (R$): ");
+        double valorCompra = sc.nextDouble();
+        System.out.print("Valor pago    (R$): ");
+        double valorPago = sc.nextDouble();
+
+        if (valorPago < valorCompra) {
+            System.out.println("\n  Quantia insuficiente para realizar a compra!");
+            return;
+        }
+
+        // Trabalhar com centavos (int) para evitar erros de ponto flutuante
+        int troco = (int) Math.round((valorPago - valorCompra) * 100);
+
+        System.out.printf("%n  Troco: R$ %.2f%n", troco / 100.0);
+
+        int[] notas = {5000, 2000, 1000, 500, 200, 100};
+        String[] nomeNotas = {"R$ 50,00", "R$ 20,00", "R$ 10,00",
+                              "R$  5,00", "R$  2,00", "R$  1,00"};
+
+        for (int i = 0; i < notas.length; i++) {
+            int qtd = troco / notas[i];
+            troco  %= notas[i];
+            System.out.println("  Notas de " + nomeNotas[i] + ": " + qtd);
+        }
+    }
+
+    // ─────────────────────────────────────────────
+    // Exercício 3 – Equação do 2º Grau
+    // ─────────────────────────────────────────────
+    static void exercicio3() {
+        System.out.println("\n── Exercício 3: Equação do 2º Grau ──");
+        System.out.print("Digite o coeficiente a: ");
+        double a = sc.nextDouble();
+        System.out.print("Digite o coeficiente b: ");
+        double b = sc.nextDouble();
+        System.out.print("Digite o coeficiente c: ");
+        double c = sc.nextDouble();
+
+        if (a == 0 && b == 0 && c != 0) {
+            System.out.println("\n  Coeficientes informados incorretamente.");
+            return;
+        }
+
+        if (a == 0 && b != 0) {
+            System.out.println("\n  Essa é uma equação de primeiro grau.");
+            double raiz = -c / b;
+            System.out.printf("  Raiz: x = %.4f%n", raiz);
+            return;
+        }
+
+        double delta = (b * b) - (4 * a * c);
+
+        if (delta < 0) {
+            System.out.println("\n  Esta equação não possui raízes reais.");
+        } else if (delta == 0) {
+            System.out.println("\n  Esta equação possui duas raízes reais iguais.");
+            double x = -b / (2 * a);
+            System.out.printf("  x1 = x2 = %.4f%n", x);
+        } else {
+            System.out.println("\n  Esta equação possui duas raízes reais diferentes.");
+            double x1 = (-b + Math.sqrt(delta)) / (2 * a);
+            double x2 = (-b - Math.sqrt(delta)) / (2 * a);
+            System.out.printf("  x1 = %.4f%n", x1);
+            System.out.printf("  x2 = %.4f%n", x2);
+        }
+    }
+
+    // ─────────────────────────────────────────────
+    // Exercício 4 – Círculo e Esfera
+    // ─────────────────────────────────────────────
+    static void exercicio4() {
+        final double PI = 3.141592;
+        System.out.println("\n── Exercício 4: Círculo e Esfera ──");
+        System.out.println("  1 - Perímetro do círculo");
+        System.out.println("  2 - Área do círculo");
+        System.out.println("  3 - Volume da esfera");
+        System.out.print("  Código da operação: ");
+        int cod = sc.nextInt();
+        System.out.print("  Raio: ");
+        double r = sc.nextDouble();
+
+        switch (cod) {
+            case 1:
+                double perimetro = 2 * PI * r;
+                System.out.printf("%n  Perímetro do círculo: %.4f%n", perimetro);
+                break;
+            case 2:
+                double area = PI * r * r;
+                System.out.printf("%n  Área do círculo: %.4f%n", area);
+                break;
+            case 3:
+                double volume = (4.0 / 3.0) * PI * r * r * r;
+                System.out.printf("%n  Volume da esfera: %.4f%n", volume);
+                break;
+            default:
+                System.out.println("\n  Código da operação inválido!");
+        }
+    }
+
+    // ─────────────────────────────────────────────
+    // Exercício 5 – Calculadora com Símbolo
+    // ─────────────────────────────────────────────
+    static void exercicio5() {
+        System.out.println("\n── Exercício 5: Calculadora ──");
+        System.out.print("Digite o 1º número: ");
+        double num1 = sc.nextDouble();
+        System.out.print("Digite o 2º número: ");
+        double num2 = sc.nextDouble();
+        System.out.print("Digite o operador (+, -, *, /, ^): ");
+        String op = sc.next();
+
+        switch (op) {
+            case "+":
+                System.out.printf("%n  %.2f + %.2f = %.2f%n", num1, num2, num1 + num2);
+                break;
+            case "-":
+                System.out.printf("%n  %.2f - %.2f = %.2f%n", num1, num2, num1 - num2);
+                break;
+            case "*":
+                System.out.printf("%n  %.2f * %.2f = %.2f%n", num1, num2, num1 * num2);
+                break;
+            case "/":
+                if (num2 == 0) {
+                    System.out.println("\n  Erro: divisão por zero!");
+                } else {
+                    System.out.printf("%n  %.2f / %.2f = %.2f%n", num1, num2, num1 / num2);
+                }
+                break;
+            case "^":
+                System.out.printf("%n  %.2f ^ %.2f = %.2f%n", num1, num2, Math.pow(num1, num2));
+                break;
+            default:
+                System.out.println("\n  Símbolo da operação inválido!");
+        }
+    }
+
+    // ─────────────────────────────────────────────
+    // Exercício 6 – Sorteio de Número
+    // ─────────────────────────────────────────────
+    static void exercicio6() {
+        System.out.println("\n── Exercício 6: Sorteio de Número ──");
+        System.out.print("Digite o 1º número inteiro: ");
+        int a = sc.nextInt();
+        System.out.print("Digite o 2º número inteiro: ");
+        int b = sc.nextInt();
+
+        int min = Math.min(a, b);
+        int max = Math.max(a, b);
+
+        // Sorteia um número entre min e max (inclusive)
+        int sorteado = min + (int) (Math.random() * (max - min + 1));
+
+        System.out.println("\n  Número sorteado: " + sorteado);
+
+        if (sorteado % 2 == 0) {
+            System.out.println("  O número " + sorteado + " é PAR.");
+        } else {
+            System.out.println("  O número " + sorteado + " é ÍMPAR.");
+        }
+    }
+}
